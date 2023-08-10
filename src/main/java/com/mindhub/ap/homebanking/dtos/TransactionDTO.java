@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 
 public class TransactionDTO {
 
-    private final Long id;
-    private final String description;
-    private final LocalDateTime date;
-    private final Double amount;
-    private final TransactionType type;
+    private Long id;
+    private String description;
+    private LocalDateTime date;
+    private Double amount;
+    private TransactionType type;
 
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
@@ -40,4 +40,21 @@ public class TransactionDTO {
     public TransactionType getType() {
         return type;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
+    }
+
 }
