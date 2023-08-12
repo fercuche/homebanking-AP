@@ -5,10 +5,11 @@ import com.mindhub.ap.homebanking.models.ClientLoan;
 public class ClientLoanDTO{
 
     private Long id;
-    private Double amount;
-    private Integer payments;
     private Long loanId;
     private String name;
+    private Double amount;
+    private Integer payments;
+
 
     public ClientLoanDTO(ClientLoan clientLoan){
 
