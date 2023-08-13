@@ -13,13 +13,13 @@ public class Card {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
+    private String cardHolder;
     private String number;
     private Integer cvv;
     private CardType type;
     private CardColor color;
     private LocalDate fromDate;
     private LocalDate thruDate;
-    private String cardHolder;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
