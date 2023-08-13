@@ -15,6 +15,18 @@ public class LoanDTO {
         this.payments = payments;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMaxAmount(Double maxAmount) {
+        this.maxAmount = maxAmount;
+    }
+
+    public void setPayments(List<Integer> payments) {
+        this.payments = payments;
+    }
+
     public Long getId() {
         return id;
     }
