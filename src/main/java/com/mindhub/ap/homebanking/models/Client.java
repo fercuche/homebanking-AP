@@ -28,13 +28,8 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
 
-    public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
-    }
-
-    public void setClientLoans(Set<ClientLoan> clientLoans) {
-        this.clientLoans = clientLoans;
-    }
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
 
     public Client() {
     }
@@ -43,6 +38,22 @@ public class Client {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
     }
 
     public Long getId() {
@@ -91,9 +102,20 @@ public class Client {
         clientLoans.add(clientLoan);
     }
 
+    public void addCard(Card card){
+        card.setClient(this);
+        cards.add(card);
+    }
+
     @JsonIgnore
     public List<Loan> getLoans(){
         return clientLoans.stream().map(loans -> loans.getLoan()).collect(toList());
     }
+
+    public String getCardHolderName(){
+        return this.firstName+ " " + this.lastName;
+    }
+
+
 
 }

@@ -19,22 +19,32 @@ public class Card {
     private CardColor color;
     private LocalDate fromDate;
     private LocalDate thruDate;
+    private String cardHolder;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
-    private Client cardHolder;
+    private Client client;
 
-    public Card(String number, Integer cvv, CardType type, CardColor color, LocalDate fromDate, LocalDate thruDate, Client cardHolder) {
+    public Card(String number, Integer cvv, CardType type, CardColor color, LocalDate fromDate, LocalDate thruDate, Client client) {
         this.number = number;
         this.cvv = cvv;
         this.type = type;
         this.color = color;
         this.fromDate = fromDate;
         this.thruDate = thruDate;
-        this.cardHolder = cardHolder;
+        this.client = client;
+        this.cardHolder = getClient().getCardHolderName();
     }
 
     public Card() {
+    }
+
+    public String getCardHolder() {
+        return cardHolder;
+    }
+
+    public void setCardHolder(String cardHolder) {
+        this.cardHolder = cardHolder;
     }
 
     public Long getId() {
@@ -65,8 +75,8 @@ public class Card {
         return thruDate;
     }
 
-    public Client getCardHolder() {
-        return cardHolder;
+    public Client getClient() {
+        return client;
     }
 
     public void setNumber(String number) {
@@ -93,7 +103,7 @@ public class Card {
         this.thruDate = thruDate;
     }
 
-    public void setCardHolder(Client cardHolder) {
-        this.cardHolder = cardHolder;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
