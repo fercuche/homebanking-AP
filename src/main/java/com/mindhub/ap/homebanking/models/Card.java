@@ -14,10 +14,10 @@ public class Card {
     private Long id;
 
     private String cardHolder;
-    private String number;
-    private Integer cvv;
     private CardType type;
     private CardColor color;
+    private String number;
+    private Integer cvv;
     private LocalDate fromDate;
     private LocalDate thruDate;
 
