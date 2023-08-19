@@ -93,7 +93,8 @@ public class Client {
 
     @JsonIgnore
     public List<Loan> getLoans(){
-        return clientLoans.stream().map(loans -> loans.getLoan()).collect(toList());
+        return clientLoans.stream()
+                .map(loans -> loans.getLoan()).collect(toList());
     }
 
 }

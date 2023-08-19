@@ -11,7 +11,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toList;
 
 @Entity
-public class Loan{
+public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -26,14 +26,6 @@ public class Loan{
 
     @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
-
-    public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
-    }
-
-    public void setClientLoans(Set<ClientLoan> clientLoans) {
-        this.clientLoans = clientLoans;
-    }
 
     public Loan() {
     }
@@ -70,6 +62,14 @@ public class Loan{
 
     public List<Integer> getPayments() {
         return payments;
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
     }
 
     public void addLoan(ClientLoan clientLoan){
