@@ -26,6 +26,9 @@ public class HomebankingApplication {
 			Client client1 = new Client("Melba", "Morel", "melbam@mail.com");
 			Client client2 = new Client("Fernando", "Maciel", "ferm@mail.com");
 
+			clientRepository.save(client1);
+			clientRepository.save(client2);
+
 			Account account1 = new Account("VIN001", LocalDate.now(),5000D, client1);
 			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1),7500D, client1);
 			Account account3 = new Account("VIN003", LocalDate.now(),8500D, client2);
@@ -44,17 +47,38 @@ public class HomebankingApplication {
 			Loan loan2 = new Loan("Personal", 100000D, List.of(6,12,24));
 			Loan loan3 = new Loan("Automotriz", 300000D, List.of(6,12,24,36));
 
-			ClientLoan clientLoan1 = new ClientLoan(400000D, 60, client1, loan1);
-			ClientLoan clientLoan2 = new ClientLoan(5000D, 12, client1, loan2);
-			ClientLoan clientLoan3 = new ClientLoan(100000D, 24, client2, loan2);
-			ClientLoan clientLoan4 = new ClientLoan(200000D, 36, client2, loan3);
+			loanRepository.save(loan1);
+			loanRepository.save(loan2);
+			loanRepository.save(loan3);
+
+			ClientLoan clientLoan1 = new ClientLoan(400000D, 60);
+			ClientLoan clientLoan2 = new ClientLoan(5000D, 12);
+			ClientLoan clientLoan3 = new ClientLoan(100000D, 24);
+			ClientLoan clientLoan4 = new ClientLoan(200000D, 36);
+
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
+			clientLoanRepository.save(clientLoan3);
+			clientLoanRepository.save(clientLoan4);
+
+			client1.addLoan(clientLoan1);
+			client1.addLoan(clientLoan2);
+			client2.addLoan(clientLoan3);
+			client2.addLoan(clientLoan4);
+
+			loan1.addLoan(clientLoan1);
+			loan2.addLoan(clientLoan2);
+			loan2.addLoan(clientLoan3);
+			loan3.addLoan(clientLoan4);
+
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
+			clientLoanRepository.save(clientLoan3);
+			clientLoanRepository.save(clientLoan4);
 
 			Card card1 = new Card("4555-5555-5555-1234", 123, CardType.DEBIT, CardColor.GOLD, LocalDate.now(), LocalDate.now().plusYears(5), client1 );
 			Card card2 = new Card("4555-5555-4444-1234", 456, CardType.CREDIT, CardColor.TITANIUM, LocalDate.now(), LocalDate.now().plusYears(5), client1 );
 			Card card3 = new Card("4555-5555-3333-1234", 789, CardType.CREDIT, CardColor.SILVER, LocalDate.now(), LocalDate.now().plusYears(5), client2 );
-
-			clientRepository.save(client1);
-			clientRepository.save(client2);
 
 			client1.addAccount(account1);
 			client1.addAccount(account2);
@@ -88,19 +112,9 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction7);
 			transactionRepository.save(transaction8);
 
-			loanRepository.save(loan1);
-			loanRepository.save(loan2);
-			loanRepository.save(loan3);
-
-			clientLoanRepository.save(clientLoan1);
-			clientLoanRepository.save(clientLoan2);
-			clientLoanRepository.save(clientLoan3);
-			clientLoanRepository.save(clientLoan4);
-
 			cardRepository.save(card1);
 			cardRepository.save(card2);
 			cardRepository.save(card3);
-
 
 		});
 	}
