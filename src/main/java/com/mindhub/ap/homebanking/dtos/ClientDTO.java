@@ -30,30 +30,6 @@ public class ClientDTO {
                 .map(card -> new CardDTO(card)).collect(toSet());
     }
 
-    public Set<CardDTO> getCards() {
-        return cards;
-    }
-
-    public void setCards(Set<CardDTO> cards) {
-        this.cards = cards;
-    }
-
-    public Set<ClientLoanDTO> getLoans() {
-        return loans;
-    }
-
-    public void setLoans(Set<ClientLoanDTO> loans) {
-        this.loans = loans;
-    }
-
-    public Set<AccountDTO> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(Set<AccountDTO> accounts) {
-        this.accounts = accounts;
-    }
-
     public Long getId() {
         return id;
     }
@@ -62,24 +38,24 @@ public class ClientDTO {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public Set<AccountDTO> getAccounts() {
+        return accounts;
+    }
+
+    public Set<ClientLoanDTO> getLoans() {
+        return loans;
+    }
+
+    public Set<CardDTO> getCards() {
+        return cards;
     }
 
 }
