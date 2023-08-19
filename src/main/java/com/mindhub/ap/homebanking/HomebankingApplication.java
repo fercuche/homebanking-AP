@@ -23,8 +23,8 @@ public class HomebankingApplication {
 									  TransactionRepository transactionRepository, LoanRepository loanRepository,
 									  ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return (args -> {
-			Client client1 = new Client("Melba", "Morel", "melbam@mail.com");
-			Client client2 = new Client("Fernando", "Maciel", "ferm@mail.com");
+			Client client1 = new Client("Melba", "Morel", "melbam@mail.com","asd1234");
+			Client client2 = new Client("Fernando", "Maciel", "ferm@mail.com", "qwe4567");
 
 			clientRepository.save(client1);
 			clientRepository.save(client2);
