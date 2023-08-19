@@ -26,18 +26,8 @@ public class ClientLoan {
     public ClientLoan() {
     }
 
-    public ClientLoan(Double amount, Integer payments, Client client, Loan loan) {
+    public ClientLoan(Double amount, Integer payments) {
         this.amount = amount;
-        this.payments = payments;
-        this.client = client;
-        this.loan = loan;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public void setPayments(Integer payments) {
         this.payments = payments;
     }
 
@@ -67,5 +57,13 @@ public class ClientLoan {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setPayments(Integer payments) {
+        this.payments = payments;
     }
 }

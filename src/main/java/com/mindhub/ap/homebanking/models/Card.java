@@ -25,6 +25,9 @@ public class Card {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    public Card() {
+    }
+
     public Card(String number, Integer cvv, CardType type, CardColor color, LocalDate fromDate, LocalDate thruDate, Client client) {
         this.number = number;
         this.cvv = cvv;
@@ -34,9 +37,6 @@ public class Card {
         this.thruDate = thruDate;
         this.client = client;
         this.cardHolder = getClient().getCardHolderName();
-    }
-
-    public Card() {
     }
 
     public String getCardHolder() {
