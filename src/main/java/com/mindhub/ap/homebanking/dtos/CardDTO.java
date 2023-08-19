@@ -32,30 +32,6 @@ public class CardDTO {
         this.cardHolder = cardHolder;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public void setCvv(Integer cvv) {
-        this.cvv = cvv;
-    }
-
-    public void setType(CardType type) {
-        this.type = type;
-    }
-
-    public void setColor(CardColor color) {
-        this.color = color;
-    }
-
-    public void setFromDate(LocalDate fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public void setThruDate(LocalDate thruDate) {
-        this.thruDate = thruDate;
-    }
-
     public Long getId() {
         return id;
     }
