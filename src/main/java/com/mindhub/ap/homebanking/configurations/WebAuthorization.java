@@ -21,9 +21,11 @@ public class WebAuthorization {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/clients","/api/login", "/api/logout").permitAll()
                 .antMatchers("/admin/").hasAnyAuthority("ADMIN")
-                .antMatchers("/api/clients/","/api/**").hasAnyAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "/api/login", "/api/logout").permitAll();
+                .antMatchers(HttpMethod.GET,"/api/clients").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.GET,"/api/accounts").hasAnyAuthority("CLIENT");
+
 
         http.formLogin()
                 .usernameParameter("email")
