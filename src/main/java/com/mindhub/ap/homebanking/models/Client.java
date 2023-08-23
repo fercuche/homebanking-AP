@@ -122,10 +122,4 @@ public class Client {
         return clientLoans.stream().map(loans -> loans.getLoan()).collect(toList());
     }
 
-    /*public String getCardHolderName(){
-        return this.firstName+ " " + this.lastName;
-    }*/
-
-
-
 }
