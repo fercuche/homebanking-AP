@@ -32,9 +32,12 @@ public class HomebankingApplication {
 					"Melba", "Morel", "melbam@mail.com", passwordEncoder.encode("asd1234"));
 			Client client2 = new Client(
 					"Fernando", "Maciel", "ferm@mail.com", passwordEncoder.encode("qwe4567"));
+			Client client3 = new Client(
+					"admin", "", "admin@admin.com", passwordEncoder.encode("admin"));
 
 			clientRepository.save(client1);
 			clientRepository.save(client2);
+			clientRepository.save(client3);
 
 			Account account1 = new Account("VIN001", LocalDate.now(),5000D, client1);
 			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1),7500D, client1);

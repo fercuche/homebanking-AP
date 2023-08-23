@@ -36,7 +36,7 @@ public class Card {
         this.fromDate = fromDate;
         this.thruDate = thruDate;
         this.client = client;
-        this.cardHolder = getClient().getCardHolderName();
+        this.cardHolder = client.getFirstName() + " " + client.getLastName();
     }
 
     public String getCardHolder() {

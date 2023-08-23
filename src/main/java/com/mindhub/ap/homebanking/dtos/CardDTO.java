@@ -28,10 +28,6 @@ public class CardDTO {
         this.thruDate = card.getThruDate();
     }
 
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
-    }
-
     public Long getId() {
         return id;
     }
