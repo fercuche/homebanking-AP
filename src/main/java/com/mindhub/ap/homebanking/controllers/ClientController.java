@@ -63,8 +63,9 @@ public class ClientController {
         if (clientRepository.findByEmail(email) != null){
             return new ResponseEntity<>("email already in use", HttpStatus.FORBIDDEN);
         }
-        clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(client);
+        return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
     @RequestMapping("/clients/current")
