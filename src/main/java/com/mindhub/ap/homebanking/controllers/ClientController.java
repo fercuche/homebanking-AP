@@ -1,7 +1,9 @@
 package com.mindhub.ap.homebanking.controllers;
 
 import com.mindhub.ap.homebanking.dtos.ClientDTO;
+import com.mindhub.ap.homebanking.models.Account;
 import com.mindhub.ap.homebanking.models.Client;
+import com.mindhub.ap.homebanking.repository.AccountRepository;
 import com.mindhub.ap.homebanking.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,6 +25,9 @@ public class ClientController {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,8 +51,7 @@ public class ClientController {
 
     @PostMapping("/clients")
     public ResponseEntity<Object> registerClient(@RequestParam String firstName, @RequestParam String lastName,
-                                           @RequestParam String email, @RequestParam String password){
-
+                                           @RequestParam String email, @RequestParam String password) {
         String missingParam = null;
         if (firstName.isEmpty()) {
             missingParam = "First Name";
@@ -65,7 +71,15 @@ public class ClientController {
         }
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(client);
-        return new ResponseEntity<>(client, HttpStatus.CREATED);
+
+
+        Random random = new Random();
+        String randomAccountNumber = String.valueOf(random.nextInt(99999999));
+        Account account = new Account("VIN-" + randomAccountNumber, LocalDate.now(),0.0D, client);
+        client.addAccount(account);
+        accountRepository.save(account);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping("/clients/current")
