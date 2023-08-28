@@ -63,15 +63,19 @@ public class CardController {
             }
         }
 
-        if ("CREDIT".equals(type.toString())) {
-            if (countCredit >= 3) {
-                return new ResponseEntity<>("Client already have 3 credit cards", HttpStatus.FORBIDDEN);
-            }
-        } else if ("DEBIT".equals(type.toString())) {
-            if (countDebit >= 3) {
-                return new ResponseEntity<>("Client already have 3 debit cards", HttpStatus.FORBIDDEN);
+        for (Card card : cards){
+            if (type.equals(card.getType()) && color.equals(card.getColor())){
+                return new ResponseEntity<>("The card already exists", HttpStatus.FORBIDDEN);
             }
         }
+
+        if ("CREDIT".equals(type.toString()) && countCredit >= 3) {
+                return new ResponseEntity<>("Client already have 3 CREDIT cards", HttpStatus.FORBIDDEN);
+        } else if ("DEBIT".equals(type.toString()) && countDebit >= 3) {
+                return new ResponseEntity<>("Client already have 3 DEBIT cards", HttpStatus.FORBIDDEN);
+        }
+
+
         Card card = new Card(cardNumber,random.nextInt(999-100+1)+100, type,
                 color, LocalDate.now(),LocalDate.now().plusYears(5),client);
         client.addCard(card);
