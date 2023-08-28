@@ -39,10 +39,10 @@ public class HomebankingApplication {
 			clientRepository.save(client2);
 			clientRepository.save(client3);
 
-			Account account1 = new Account("VIN001", LocalDate.now(),5000D, client1);
-			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1),7500D, client1);
-			Account account3 = new Account("VIN003", LocalDate.now(),8500D, client2);
-			Account account4 = new Account("VIN004", LocalDate.now().plusDays(1),9500D, client2);
+			Account account1 = new Account("VIN-001", LocalDate.now(),5000D, client1);
+			Account account2 = new Account("VIN-002", LocalDate.now().plusDays(1),7500D, client1);
+			Account account3 = new Account("VIN-003", LocalDate.now(),8500D, client2);
+			Account account4 = new Account("VIN-004", LocalDate.now().plusDays(1),9500D, client2);
 
 			Transaction transaction1 = new Transaction("Store", LocalDateTime.now(),-5000D, TransactionType.DEBIT, account1);
 			Transaction transaction2 = new Transaction("Income", LocalDateTime.now(),5000D, TransactionType.CREDIT, account1);
