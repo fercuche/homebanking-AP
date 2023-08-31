@@ -34,22 +34,17 @@ public class CardController {
     @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard(@RequestParam String cardType, @RequestParam String cardColor){
 
+        if (cardType.isEmpty()) {
+            return new ResponseEntity<>("Card type is required", HttpStatus.FORBIDDEN);
+        } else if (cardColor.isEmpty()) {
+            return new ResponseEntity<>("Card color is required", HttpStatus.FORBIDDEN);
+        }
+
         CardType type = CardType.valueOf(cardType);
         CardColor color = CardColor.valueOf(cardColor);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientRepository.findByEmail(authentication.getName());
-
-        Random random = new Random();
-        StringBuilder cardNumberBuilder = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            if (i > 0) {
-                cardNumberBuilder.append("-");
-            }
-            int section = random.nextInt(9000-1000+1) + 1000;
-            cardNumberBuilder.append(section);
-        }
-        String cardNumber = cardNumberBuilder.toString();
 
         Set<Card> cards = client.getCards();
         int countCredit = 0;
@@ -75,6 +70,19 @@ public class CardController {
                 return new ResponseEntity<>("Client already have 3 DEBIT cards", HttpStatus.FORBIDDEN);
         }
 
+        Random random = new Random();
+        StringBuilder cardNumberBuilder = new StringBuilder();
+        String cardNumber;
+        do {
+            for (int i = 0; i < 4; i++) {
+                if (i > 0) {
+                    cardNumberBuilder.append("-");
+                }
+                int section = random.nextInt(9000-1000+1) + 1000;
+                cardNumberBuilder.append(section);
+            }
+            cardNumber = cardNumberBuilder.toString();
+        }while (cardRepository.existsByNumber(cardNumber));
 
         Card card = new Card(cardNumber,random.nextInt(999-100+1)+100, type,
                 color, LocalDate.now(),LocalDate.now().plusYears(5),client);

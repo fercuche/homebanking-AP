@@ -44,14 +44,18 @@ public class AccountController {
 
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> createAccount(){
-        Random random = new Random();
-        String randomAccountNumber = String.valueOf(random.nextInt(99999999));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientRepository.findByEmail(authentication.getName());
         if (client.getAccounts().size() == 3) {
             return new ResponseEntity<>("The client already have 3 accounts", HttpStatus.FORBIDDEN);
         } else {
+            Random random = new Random();
+            String randomAccountNumber;
+            do {
+                randomAccountNumber = String.valueOf(random.nextInt(99999999));
+            } while (accountRepository.existsByNumber(randomAccountNumber));
+
             Account account = new Account("VIN-" + randomAccountNumber, LocalDate.now(), 0.0D, client);
             client.addAccount(account);
             accountRepository.save(account);
