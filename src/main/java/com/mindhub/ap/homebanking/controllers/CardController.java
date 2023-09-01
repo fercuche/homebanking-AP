@@ -47,7 +47,7 @@ public class CardController {
         Client client = clientRepository.findByEmail(authentication.getName());
 
         Set<Card> cards = client.getCards();
-        int countCredit = 0;
+        /*int countCredit = 0;
         int countDebit = 0;
 
         for (Card card : cards){
@@ -56,7 +56,7 @@ public class CardController {
             }else if ("DEBIT".equals(card.getType().toString())){
                 countDebit++;
             }
-        }
+        }*/
 
         for (Card card : cards){
             if (type.equals(card.getType()) && color.equals(card.getColor())){
@@ -64,11 +64,11 @@ public class CardController {
             }
         }
 
-        if ("CREDIT".equals(type.toString()) && countCredit >= 3) {
+        /*if ("CREDIT".equals(type.toString()) && countCredit >= 3) {
                 return new ResponseEntity<>("Client already have 3 CREDIT cards", HttpStatus.FORBIDDEN);
         } else if ("DEBIT".equals(type.toString()) && countDebit >= 3) {
                 return new ResponseEntity<>("Client already have 3 DEBIT cards", HttpStatus.FORBIDDEN);
-        }
+        }*/
 
         Random random = new Random();
         StringBuilder cardNumberBuilder = new StringBuilder();
