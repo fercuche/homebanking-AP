@@ -6,6 +6,7 @@ Vue.createApp({
             payments: 0,
             paymentsList: [],
             clientAccounts: [],
+            showPayments: false,
             errorToats: null,
             errorMsg: null,
             accountToNumber: "VIN",
@@ -15,11 +16,11 @@ Vue.createApp({
     },
     methods: {
         getData: function () {
-            Promise.all([axios.get("/api/loans"), axios.get("/api/clients/current/accounts")])
+            Promise.all([axios.get("/api/loans"), axios.get("/api/clients/current")])
                 .then((response) => {
                     //get loan types ifo
                     this.loanTypes = response[0].data;
-                    this.clientAccounts = response[1].data;
+                    this.clientAccounts = response[1].data.accounts;
                 })
                 .catch((error) => {
                     this.errorMsg = "Error getting data";
@@ -61,7 +62,12 @@ Vue.createApp({
                 })
         },
         changedType: function () {
-            this.paymentsList = this.loanTypes.find(loanType => loanType.id == this.loanTypeId).payments;
+            if (this.loanTypeId === '0') {
+                this.showPayments = false;
+            } else {
+                this.showPayments = true;
+                this.paymentsList = this.loanTypes.find(loanType => loanType.id == this.loanTypeId).payments;
+            }
         },
         finish: function () {
             window.location.reload();

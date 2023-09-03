@@ -15,10 +15,10 @@ Vue.createApp({
     },
     methods: {
         getData: function () {
-            axios.get("/api/clients/current/accounts")
+            axios.get("/api/clients/current")
                 .then((response) => {
                     //get client ifo
-                    this.clientAccounts = response.data;
+                    this.clientAccounts = response.data.accounts;
                 })
                 .catch((error) => {
                     this.errorMsg = "Error getting data";

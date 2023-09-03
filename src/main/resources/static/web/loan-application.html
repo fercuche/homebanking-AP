@@ -83,7 +83,7 @@
                                                 loanType.name }} | max amount: {{ loanType.maxAmount }}</option>
                                         </select>
                                     </div>
-                                    <div class="col">
+                                    <div class="col" v-if="showPayments">
                                         <label for="payments" class="form-label">Payments</label>
                                         <select id="payments" v-model="payments" class="form-select"
                                             aria-label="Default select example" required>
