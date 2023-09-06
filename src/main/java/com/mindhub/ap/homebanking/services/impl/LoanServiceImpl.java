@@ -34,7 +34,6 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-
     @Override
     public List<LoanDTO> getAllLoans() {
         return loanRepository.findAll().stream()
@@ -71,8 +70,10 @@ public class LoanServiceImpl implements LoanService {
 
         Account account = accountRepository.findByNumber(dto.getToAccountNumber());
 
-        Transaction transaction = new Transaction( loanRepository.getLoanById(dto.getLoanId()).getName()+ " " +"loan approved",
-                LocalDateTime.now(), dto.getAmount(), TransactionType.CREDIT, account);
+        Transaction transaction = new Transaction( loanRepository.getLoanById(
+                dto.getLoanId()).getName()+" loan approved", LocalDateTime.now(), dto.getAmount(),
+                TransactionType.CREDIT, account);
+
         transactionRepository.save(transaction);
 
         account.setBalance(account.getBalance() + transaction.getAmount());
