@@ -62,7 +62,7 @@ public class LoanServiceImpl implements LoanService {
 
         Client client = clientRepository.findByEmail(authentication.getName());
 
-        ClientLoan clientLoan = new ClientLoan(dto.getAmount()*(1+0.2),dto.getPayments());
+        ClientLoan clientLoan = new ClientLoan(dto.getAmount()*1.2,dto.getPayments());
         client.addLoan(clientLoan);
         loanRepository.getLoanById(dto.getLoanId()).addLoan(clientLoan);
         clientLoanRepository.save(clientLoan);

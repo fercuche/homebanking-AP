@@ -37,10 +37,10 @@ public class LoanController {
             validationError = "Payments field is required";
         } else if (dto.getToAccountNumber().isEmpty()) {
             validationError = "Destination account is required";
-        } else if (dto.getAmount() == 0) {
-            validationError = "Amount can't be zero";
-        } else if (dto.getPayments() == 0){
-            validationError = "Payments can't be zero";
+        } else if (dto.getAmount() <= 0) {
+            validationError = "Amount must be greater than zero";
+        } else if (dto.getPayments() <= 0){
+            validationError = "Payments must be greater than zero";
         }
         if (validationError != null) {
             return new ResponseEntity<>(validationError, HttpStatus.FORBIDDEN);
