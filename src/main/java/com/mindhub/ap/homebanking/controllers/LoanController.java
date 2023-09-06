@@ -7,6 +7,7 @@ import com.mindhub.ap.homebanking.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,9 +26,22 @@ public class LoanController {
     }
 
     @PostMapping("/loans")
-    public ResponseEntity<Object> requestLoan(@RequestBody LoanApplicationDTO dto){
+    public ResponseEntity<Object> requestLoan(@RequestBody LoanApplicationDTO dto, Authentication authentication){
 
-        String validationError = loanService.requestLoanValidations(dto);
+        String validationError = null;
+        if (dto.getLoanId() == null) {
+            validationError = "Loan ID is required";
+        } else if (dto.getAmount() == null) {
+            validationError = "Amount is required";
+        } else if (dto.getPayments() == null) {
+            validationError = "Payments field is required";
+        } else if (dto.getToAccountNumber().isEmpty()) {
+            validationError = "Destination account is required";
+        } else if (dto.getAmount() == 0) {
+            validationError = "Amount can't be zero";
+        } else if (dto.getPayments() == 0){
+            validationError = "Payments can't be zero";
+        }
         if (validationError != null) {
             return new ResponseEntity<>(validationError, HttpStatus.FORBIDDEN);
         }
@@ -49,11 +63,11 @@ public class LoanController {
             return new ResponseEntity<>("Destination account doesn't exist", HttpStatus.FORBIDDEN);
         }
 
-        if (!loanService.currentClientMatchAccount(dto.getToAccountNumber())) {
+        if (!loanService.currentClientMatchAccount(dto.getToAccountNumber(), authentication)) {
             return new ResponseEntity<>("Account doesn't belong to the current client", HttpStatus.FORBIDDEN);
         }
 
-        loanService.requestLoan(dto);
+        loanService.requestLoan(dto, authentication);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

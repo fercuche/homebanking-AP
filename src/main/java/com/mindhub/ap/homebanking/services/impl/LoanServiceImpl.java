@@ -51,16 +51,15 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public boolean currentClientMatchAccount(String number) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public boolean currentClientMatchAccount(String number, Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName());
         return client.getAccounts().contains(accountRepository.findByNumber(number));
     }
 
     @Transactional
     @Override
-    public void requestLoan(LoanApplicationDTO dto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public void requestLoan(LoanApplicationDTO dto, Authentication authentication) {
+
         Client client = clientRepository.findByEmail(authentication.getName());
 
         ClientLoan clientLoan = new ClientLoan(dto.getAmount()*(1+0.2),dto.getPayments());
@@ -78,23 +77,5 @@ public class LoanServiceImpl implements LoanService {
 
         account.setBalance(account.getBalance() + transaction.getAmount());
         accountRepository.save(account);
-    }
-
-    @Override
-    public String requestLoanValidations(LoanApplicationDTO dto) {
-        if (dto.getLoanId() == null) {
-            return "Loan ID is required";
-        } else if (dto.getAmount() == null) {
-            return "Amount is required";
-        } else if (dto.getPayments() == null) {
-            return "Payments field is required";
-        } else if (dto.getToAccountNumber().isEmpty()) {
-            return "Destination account is required";
-        } else if (dto.getAmount() == 0) {
-            return "Amount can't be zero";
-        } else if (dto.getPayments() == 0){
-            return "Payments can't be zero";
-        }
-        return null;
     }
 }
