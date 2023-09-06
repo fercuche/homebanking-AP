@@ -10,5 +10,7 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     List<Loan> findAll();
+    boolean existsById(Long id);
+    Loan getLoanById(Long id);
 
 }
