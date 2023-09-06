@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,6 +58,7 @@ public class LoanServiceImpl implements LoanService {
         return client.getAccounts().contains(accountRepository.findByNumber(number));
     }
 
+    @Transactional
     @Override
     public void requestLoan(LoanApplicationDTO dto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

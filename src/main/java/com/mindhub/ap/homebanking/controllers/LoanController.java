@@ -25,7 +25,6 @@ public class LoanController {
         return loanService.getAllLoans();
     }
 
-    @Transactional
     @PostMapping("/loans")
     public ResponseEntity<Object> requestLoan(@RequestBody LoanApplicationDTO dto){
 
