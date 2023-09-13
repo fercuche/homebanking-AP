@@ -7,15 +7,13 @@ import com.mindhub.ap.homebanking.models.CardType;
 import com.mindhub.ap.homebanking.models.Client;
 import com.mindhub.ap.homebanking.repository.CardRepository;
 import com.mindhub.ap.homebanking.repository.ClientRepository;
+import com.mindhub.ap.homebanking.services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -24,6 +22,9 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api")
 public class CardController {
+
+    @Autowired
+    private CardService cardService;
 
     @Autowired
     private CardRepository cardRepository;
@@ -85,11 +86,19 @@ public class CardController {
         }while (cardRepository.existsByNumber(cardNumber));
 
         Card card = new Card(cardNumber,random.nextInt(999-100+1)+100, type,
-                color, LocalDate.now(),LocalDate.now().plusYears(5),client);
+                color, LocalDate.now(),LocalDate.now().plusYears(5),client, false);
         client.addCard(card);
         cardRepository.save(card);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
+
+    @PatchMapping("/clients/current/cards/{id}")
+    public ResponseEntity<Object> deleteCard(@PathVariable Long id){
+        cardService.deleteCard(id);
+        return new ResponseEntity<>("Card successfully deleted", HttpStatus.OK);
+    }
+
+
 }

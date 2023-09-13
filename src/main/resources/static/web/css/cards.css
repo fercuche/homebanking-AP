@@ -1,11 +1,18 @@
 .plastic-card {
 	width: 320px;
-	height: 190px;
+	height: 220px;
 	-webkit-perspective: 600px;
 	-moz-perspective: 600px;
 	perspective: 600px;
 	margin-left: 5px;
 	margin-right: 5px;
+}
+
+.delete-card-btn{
+	position: absolute;
+	left: 0px;
+	top: 194px;
+	z-index: 2000;
 }
 
 .plastic-card__part {
