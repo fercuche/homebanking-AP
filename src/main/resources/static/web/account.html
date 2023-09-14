@@ -76,13 +76,13 @@
                 <div class="col">
                     <div class="row">
                         <div class="col">
-                            <h1 class="display-1">Account details</h1>
+                            <h1 class="display-3">Account N°{{ accountInfo.number }} details</h1>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <h2 class="display-6 account">Account Number: {{ accountInfo.number }} - Balance: ${{
-                                accountInfo.balance }}</h2>
+                            <h2 class="display-6 account">Type: {{ accountInfo.accountType === 'SAVINGS' ? 'Savings' : 'Checking' }} -
+                                Balance: ${{ accountInfo.balance }}</h2>
                         </div>
                     </div>
                     <div class="row mt-3">

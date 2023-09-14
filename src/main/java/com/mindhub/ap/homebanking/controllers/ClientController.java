@@ -2,6 +2,7 @@ package com.mindhub.ap.homebanking.controllers;
 
 import com.mindhub.ap.homebanking.dtos.ClientDTO;
 import com.mindhub.ap.homebanking.models.Account;
+import com.mindhub.ap.homebanking.models.AccountType;
 import com.mindhub.ap.homebanking.models.Client;
 import com.mindhub.ap.homebanking.repository.AccountRepository;
 import com.mindhub.ap.homebanking.repository.ClientRepository;
@@ -75,7 +76,7 @@ public class ClientController {
 
         Random random = new Random();
         String randomAccountNumber = String.valueOf(random.nextInt(99999999));
-        Account account = new Account("VIN-" + randomAccountNumber, LocalDate.now(),0.0D, client);
+        Account account = new Account("VIN-" + randomAccountNumber, AccountType.SAVINGS, LocalDate.now(),0.0D, client);
         client.addAccount(account);
         accountRepository.save(account);
 

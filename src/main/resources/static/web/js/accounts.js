@@ -2,6 +2,7 @@ Vue.createApp({
     data() {
         return {
             clientInfo: {},
+            typeAccount: "none",
             errorToats: null,
             errorMsg: null,
         }
@@ -30,17 +31,32 @@ Vue.createApp({
                     this.errorToats.show();
                 })
         },
-        create: function () {
-            axios.post('/api/clients/current/accounts')
-                .then(response => window.location.reload())
-                .catch((error) => {
-                    this.errorMsg = error.response.data;
-                    this.errorToats.show();
-                })
+        selectType: function () {
+            this.modal.show();
+        },
+        create: function (event) {
+            event.preventDefault();
+            if (this.typeAccount === "none") {
+                this.errorMsg = "You must select an account type";
+                this.errorToats.show();
+            } else {
+                let config = {
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    }
+                }
+                axios.post(`/api/clients/current/accounts?accountType=${this.typeAccount}`, config)
+                    .then(response => window.location.reload())
+                    .catch((error) => {
+                        this.errorMsg = error.response.data;
+                        this.errorToats.show();
+                    })
+            }
         }
     },
     mounted: function () {
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
+        this.modal = new bootstrap.Modal(document.getElementById('SelectTypeModal'));
         this.getData();
     }
 }).mount('#app')
