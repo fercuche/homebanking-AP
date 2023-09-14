@@ -73,6 +73,9 @@ public class TransactionController {
             return new ResponseEntity<>("Source account doesn't belong to authenticated client", HttpStatus.FORBIDDEN);
         }
 
+        sourceAccount.setBalance(sourceAccount.getBalance() - amount);
+        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
+
         Transaction creditTransaction = new Transaction(description + " " + sourceAccount.getNumber(),
                 LocalDateTime.now(), amount, TransactionType.CREDIT, destinationAccount);
         Transaction debitTransaction = new Transaction(description + " " + destinationAccount.getNumber(),
@@ -81,14 +84,11 @@ public class TransactionController {
         sourceAccount.addTransaction(debitTransaction);
         destinationAccount.addTransaction(creditTransaction);
 
-        transactionRepository.save(creditTransaction);
-        transactionRepository.save(debitTransaction);
-
-        sourceAccount.setBalance(sourceAccount.getBalance() - amount);
-        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
-
         accountRepository.save(sourceAccount);
         accountRepository.save(destinationAccount);
+
+        transactionRepository.save(creditTransaction);
+        transactionRepository.save(debitTransaction);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
