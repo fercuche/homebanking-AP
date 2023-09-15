@@ -1,5 +1,6 @@
 package com.mindhub.ap.homebanking.controllers;
 
+import com.mindhub.ap.homebanking.dtos.TransactionDTO;
 import com.mindhub.ap.homebanking.models.Account;
 import com.mindhub.ap.homebanking.models.Client;
 import com.mindhub.ap.homebanking.models.Transaction;
@@ -7,22 +8,27 @@ import com.mindhub.ap.homebanking.models.TransactionType;
 import com.mindhub.ap.homebanking.repository.AccountRepository;
 import com.mindhub.ap.homebanking.repository.ClientRepository;
 import com.mindhub.ap.homebanking.repository.TransactionRepository;
+import com.mindhub.ap.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -91,5 +97,14 @@ public class TransactionController {
         transactionRepository.save(debitTransaction);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/transactions")
+    public ResponseEntity<Object> filterTransactionsByDate(String fromDate, String toDate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime from = LocalDate.parse(fromDate, formatter).atStartOfDay();
+        LocalDateTime to = LocalDate.parse(toDate, formatter).atStartOfDay();
+        List<TransactionDTO> filteredTransactions = transactionService.filterByDate(from, to);
+        return new ResponseEntity<>(filteredTransactions, HttpStatus.OK);
     }
 }

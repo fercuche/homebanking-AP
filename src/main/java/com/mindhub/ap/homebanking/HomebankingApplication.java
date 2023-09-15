@@ -44,14 +44,14 @@ public class HomebankingApplication {
 			Account account3 = new Account("VIN-003", AccountType.CHECKING, LocalDate.now(),8500D, client2);
 			Account account4 = new Account("VIN-004", AccountType.SAVINGS, LocalDate.now().plusDays(1),9500D, client2);
 
-			Transaction transaction1 = new Transaction("Store", LocalDateTime.now(),-5000D, TransactionType.DEBIT, account1);
-			Transaction transaction2 = new Transaction("Income", LocalDateTime.now(),5000D, TransactionType.CREDIT, account1);
-			Transaction transaction3 = new Transaction("Groceries", LocalDateTime.now(),-7500D, TransactionType.DEBIT, account2);
-			Transaction transaction4 = new Transaction("Mark", LocalDateTime.now(),7500D, TransactionType.CREDIT, account2);
-			Transaction transaction5 = new Transaction("Gas", LocalDateTime.now(),-8500D, TransactionType.DEBIT, account3);
-			Transaction transaction6 = new Transaction("Melba", LocalDateTime.now(),8500D, TransactionType.CREDIT, account3);
-			Transaction transaction7 = new Transaction("Starbucks", LocalDateTime.now(),-6000D, TransactionType.DEBIT, account4);
-			Transaction transaction8 = new Transaction("Fernando", LocalDateTime.now(),6000D, TransactionType.CREDIT, account4);
+			Transaction transaction1 = new Transaction("Store", LocalDateTime.now().minusDays(5),-5000D, TransactionType.DEBIT, account1);
+			Transaction transaction2 = new Transaction("Income", LocalDateTime.now().minusDays(10),5000D, TransactionType.CREDIT, account1);
+			Transaction transaction3 = new Transaction("Groceries", LocalDateTime.now().minusDays(3),-7500D, TransactionType.DEBIT, account2);
+			Transaction transaction4 = new Transaction("Mark", LocalDateTime.now().minusDays(2),7500D, TransactionType.CREDIT, account2);
+			Transaction transaction5 = new Transaction("Gas", LocalDateTime.now().minusDays(6),-8500D, TransactionType.DEBIT, account3);
+			Transaction transaction6 = new Transaction("Melba", LocalDateTime.now().minusDays(7),8500D, TransactionType.CREDIT, account3);
+			Transaction transaction7 = new Transaction("Starbucks", LocalDateTime.now().minusDays(8),-6000D, TransactionType.DEBIT, account4);
+			Transaction transaction8 = new Transaction("Fernando", LocalDateTime.now().minusDays(9),6000D, TransactionType.CREDIT, account4);
 
 			Loan loan1 = new Loan("Hipotecario", 500000D, List.of(12,24,36,48,60));
 			Loan loan2 = new Loan("Personal", 100000D, List.of(6,12,24));
