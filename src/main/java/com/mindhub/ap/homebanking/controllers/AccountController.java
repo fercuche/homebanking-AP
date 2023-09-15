@@ -35,7 +35,7 @@ public class AccountController {
                 .map(AccountDTO::new).collect(toList());
     }
 
-    @RequestMapping("/accounts/{id}")
+    @GetMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
         return accountRepository.getAccountById(id)
                 .map(AccountDTO::new)

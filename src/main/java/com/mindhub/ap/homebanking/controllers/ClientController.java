@@ -34,7 +34,7 @@ public class ClientController {
     private PasswordEncoder passwordEncoder;
 
 
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public ResponseEntity<List<ClientDTO>> getClients(){
         List<ClientDTO> clientDTOs = clientRepository.findAll().stream()
                 .map(ClientDTO::new).collect(toList());
@@ -42,7 +42,7 @@ public class ClientController {
 
     }
 
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
         return clientRepository.getClientById(id)
                                 .map(ClientDTO::new)
@@ -83,7 +83,7 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ResponseEntity<ClientDTO> getCurrent(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientRepository.findByEmail(authentication.getName());
