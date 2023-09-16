@@ -45,7 +45,7 @@ class RepositoriesTest {
     @Test
     void maxAmountPersonalLoan(){
         Loan personalLoan = loanRepository.getLoanByName("Personal");
-        assertThat(personalLoan, hasProperty("maxAmount", is(10000D)));
+        assertThat(personalLoan, hasProperty("maxAmount", is(100000D)));
     }
 
     @Test
