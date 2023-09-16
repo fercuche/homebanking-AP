@@ -8,6 +8,7 @@ import com.mindhub.ap.homebanking.models.Client;
 import com.mindhub.ap.homebanking.repository.CardRepository;
 import com.mindhub.ap.homebanking.repository.ClientRepository;
 import com.mindhub.ap.homebanking.services.CardService;
+import com.mindhub.ap.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,18 +76,10 @@ public class CardController {
         StringBuilder cardNumberBuilder = new StringBuilder();
         String cardNumber;
         do {
-            for (int i = 0; i < 4; i++) {
-                if (i > 0) {
-                    cardNumberBuilder.append("-");
-                }
-                int section = random.nextInt(9000-1000+1) + 1000;
-                cardNumberBuilder.append(section);
-            }
-            cardNumber = cardNumberBuilder.toString();
+            cardNumber = CardUtils.getCardNumber(random, cardNumberBuilder);
         }while (cardRepository.existsByNumber(cardNumber));
 
-        Card card = new Card(cardNumber,random.nextInt(999-100+1)+100, type,
-                color, LocalDate.now(),LocalDate.now().plusYears(5),client, false);
+        Card card = new Card(cardNumber, CardUtils.getCVV(random), type, color, LocalDate.now(),LocalDate.now().plusYears(5),client, false);
         client.addCard(card);
         cardRepository.save(card);
 
