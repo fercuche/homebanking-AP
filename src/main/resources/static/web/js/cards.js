@@ -4,6 +4,8 @@ Vue.createApp({
             clientInfo: {},
             creditCards: [],
             debitCards: [],
+            activeCards: [],
+            cardToDelete: null,
             errorToats: null,
             errorMsg: null,
         }
@@ -14,8 +16,9 @@ Vue.createApp({
                 .then((response) => {
                     //get client ifo
                     this.clientInfo = response.data;
-                    this.creditCards = this.clientInfo.cards.filter(card => card.type == "CREDIT");
-                    this.debitCards = this.clientInfo.cards.filter(card => card.type == "DEBIT");
+                    this.activeCards = this.clientInfo.cards.filter(card => card.deleted == false)
+                    this.creditCards = this.activeCards.filter(card => card.type == "CREDIT" );
+                    this.debitCards = this.activeCards.filter(card => card.type == "DEBIT");
                 })
                 .catch((error) => {
                     this.errorMsg = "Error getting data";
@@ -24,6 +27,25 @@ Vue.createApp({
         },
         formatDate: function (date) {
             return new Date(date).toLocaleDateString('en-gb');
+        },
+        openDeleteModal: function (card){
+            this.cardToDelete = card
+            this.modal.show();
+        },
+        deleteCard: function () {
+            const cardId = this.cardToDelete.id
+            axios.patch(`/api/clients/current/cards/${cardId}`)
+                .then(response => {
+                    this.modal.hide();
+                    this.okmodal.show();
+                })
+                .catch(() => {
+                    this.errorMsg = "Error deleting card"
+                    this.errorToats.show();
+                })
+        },
+        finished: function () {
+            window.location.reload();
         },
         signOut: function () {
             axios.post('/api/logout')
@@ -36,6 +58,8 @@ Vue.createApp({
     },
     mounted: function () {
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
+        this.modal = new bootstrap.Modal(document.getElementById('confirModal'));
+        this.okmodal = new bootstrap.Modal(document.getElementById('okModal'));
         this.getData();
     }
 }).mount('#app')

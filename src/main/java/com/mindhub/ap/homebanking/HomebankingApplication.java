@@ -39,19 +39,19 @@ public class HomebankingApplication {
 			clientRepository.save(client2);
 			clientRepository.save(client3);
 
-			Account account1 = new Account("VIN001", LocalDate.now(),5000D, client1);
-			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1),7500D, client1);
-			Account account3 = new Account("VIN003", LocalDate.now(),8500D, client2);
-			Account account4 = new Account("VIN004", LocalDate.now().plusDays(1),9500D, client2);
+			Account account1 = new Account("VIN-001", AccountType.CHECKING, LocalDate.now(),5000D, client1);
+			Account account2 = new Account("VIN-002", AccountType.SAVINGS, LocalDate.now().plusDays(1),7500D, client1);
+			Account account3 = new Account("VIN-003", AccountType.CHECKING, LocalDate.now(),8500D, client2);
+			Account account4 = new Account("VIN-004", AccountType.SAVINGS, LocalDate.now().plusDays(1),9500D, client2);
 
-			Transaction transaction1 = new Transaction("Store", LocalDateTime.now(),-5000D, TransactionType.DEBIT, account1);
-			Transaction transaction2 = new Transaction("Income", LocalDateTime.now(),5000D, TransactionType.CREDIT, account1);
-			Transaction transaction3 = new Transaction("Groceries", LocalDateTime.now(),-7500D, TransactionType.DEBIT, account2);
-			Transaction transaction4 = new Transaction("Mark", LocalDateTime.now(),7500D, TransactionType.CREDIT, account2);
-			Transaction transaction5 = new Transaction("Gas", LocalDateTime.now(),-8500D, TransactionType.DEBIT, account3);
-			Transaction transaction6 = new Transaction("Melba", LocalDateTime.now(),8500D, TransactionType.CREDIT, account3);
-			Transaction transaction7 = new Transaction("Starbucks", LocalDateTime.now(),-6000D, TransactionType.DEBIT, account4);
-			Transaction transaction8 = new Transaction("Fernando", LocalDateTime.now(),6000D, TransactionType.CREDIT, account4);
+			Transaction transaction1 = new Transaction("Store", LocalDateTime.now().minusDays(5),-5000D, TransactionType.DEBIT, account1);
+			Transaction transaction2 = new Transaction("Income", LocalDateTime.now().minusDays(10),5000D, TransactionType.CREDIT, account1);
+			Transaction transaction3 = new Transaction("Groceries", LocalDateTime.now().minusDays(3),-7500D, TransactionType.DEBIT, account2);
+			Transaction transaction4 = new Transaction("Mark", LocalDateTime.now().minusDays(2),7500D, TransactionType.CREDIT, account2);
+			Transaction transaction5 = new Transaction("Gas", LocalDateTime.now().minusDays(6),-8500D, TransactionType.DEBIT, account3);
+			Transaction transaction6 = new Transaction("Melba", LocalDateTime.now().minusDays(7),8500D, TransactionType.CREDIT, account3);
+			Transaction transaction7 = new Transaction("Starbucks", LocalDateTime.now().minusDays(8),-6000D, TransactionType.DEBIT, account4);
+			Transaction transaction8 = new Transaction("Fernando", LocalDateTime.now().minusDays(9),6000D, TransactionType.CREDIT, account4);
 
 			Loan loan1 = new Loan("Hipotecario", 500000D, List.of(12,24,36,48,60));
 			Loan loan2 = new Loan("Personal", 100000D, List.of(6,12,24));
@@ -86,9 +86,12 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan3);
 			clientLoanRepository.save(clientLoan4);
 
-			Card card1 = new Card("4555-5555-5555-1234", 123, CardType.DEBIT, CardColor.GOLD, LocalDate.now(), LocalDate.now().plusYears(5), client1 );
-			Card card2 = new Card("4555-5555-4444-1234", 456, CardType.CREDIT, CardColor.TITANIUM, LocalDate.now(), LocalDate.now().plusYears(5), client1 );
-			Card card3 = new Card("4555-5555-3333-1234", 789, CardType.CREDIT, CardColor.SILVER, LocalDate.now(), LocalDate.now().plusYears(5), client2 );
+			Card card1 = new Card("4555-5555-5555-1234", 123, CardType.DEBIT, CardColor.GOLD, LocalDate.now(),
+					LocalDate.now().plusYears(5), client1, false );
+			Card card2 = new Card("4555-5555-4444-1234", 456, CardType.CREDIT, CardColor.TITANIUM, LocalDate.now(),
+					LocalDate.now().plusYears(5), client1, false );
+			Card card3 = new Card("4555-5555-3333-1234", 789, CardType.CREDIT, CardColor.SILVER, LocalDate.now(),
+					LocalDate.now().plusYears(5), client2, false );
 
 			client1.addAccount(account1);
 			client1.addAccount(account2);

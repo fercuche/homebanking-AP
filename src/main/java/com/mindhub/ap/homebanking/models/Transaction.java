@@ -16,6 +16,7 @@ public class Transaction {
     private String description;
     private LocalDateTime date;
     private Double amount;
+    private Double balance;
     private TransactionType type;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,6 +33,7 @@ public class Transaction {
         this.amount = amount;
         this.type = type;
         this.account = account;
+        this.balance = account.getBalance();
     }
 
     public void setDescription(String description) {
@@ -52,6 +54,10 @@ public class Transaction {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public void setBalance(Double actualBalance) {
+        this.balance = actualBalance;
     }
 
     public Long getId() {
@@ -76,5 +82,9 @@ public class Transaction {
 
     public Account getAccount() {
         return account;
+    }
+
+    public Double getBalance() {
+        return balance;
     }
 }

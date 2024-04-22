@@ -1,25 +1,13 @@
 Vue.createApp({
     data() {
         return {
-            clientInfo: {},
-            typeAccount: "none",
             errorToats: null,
             errorMsg: null,
+            cardType: "none",
+            cardColor: "none",
         }
     },
     methods: {
-        getData: function () {
-            axios.get("/api/clients/current")
-                .then((response) => {
-                    //get client ifo
-                    this.clientInfo = response.data;
-                })
-                .catch((error) => {
-                    // handle error
-                    this.errorMsg = "Error getting data";
-                    this.errorToats.show();
-                })
-        },
         formatDate: function (date) {
             return new Date(date).toLocaleDateString('en-gb');
         },
@@ -31,13 +19,10 @@ Vue.createApp({
                     this.errorToats.show();
                 })
         },
-        selectType: function () {
-            this.modal.show();
-        },
         create: function (event) {
             event.preventDefault();
-            if (this.typeAccount === "none") {
-                this.errorMsg = "You must select an account type";
+            if (this.cardType == "none" || this.cardColor == "none") {
+                this.errorMsg = "You must select a card type and color";
                 this.errorToats.show();
             } else {
                 let config = {
@@ -45,8 +30,8 @@ Vue.createApp({
                         'content-type': 'application/x-www-form-urlencoded'
                     }
                 }
-                axios.post(`/api/clients/current/accounts?accountType=${this.typeAccount}`, config)
-                    .then(response => window.location.reload())
+                axios.post(`/api/clients/current/cards?cardType=${this.cardType}&cardColor=${this.cardColor}`, config)
+                    .then(response => window.location.href = "/web/cards.html")
                     .catch((error) => {
                         this.errorMsg = error.response.data;
                         this.errorToats.show();
@@ -56,7 +41,5 @@ Vue.createApp({
     },
     mounted: function () {
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
-        this.modal = new bootstrap.Modal(document.getElementById('SelectTypeModal'));
-        this.getData();
     }
 }).mount('#app')

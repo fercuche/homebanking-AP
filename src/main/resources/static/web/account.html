@@ -76,13 +76,14 @@
                 <div class="col">
                     <div class="row">
                         <div class="col">
-                            <h1 class="display-1">Account details</h1>
+                            <h1 class="display-3">Account N°{{ accountInfo.number }} details</h1>
+                            <button type="button" v-on:click="filterDates" class="btn btn-sm btn-success">Search transactions</button>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <h2 class="display-6 account">Account Number: {{ accountInfo.number }} - Balance: ${{
-                                accountInfo.balance }}</h2>
+                            <h2 class="display-6 account">Type: {{ accountInfo.accountType === 'SAVINGS' ? 'Savings' : 'Checking' }} -
+                                Balance: ${{ accountInfo.balance }}</h2>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -91,23 +92,100 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
+                                        <th>Nº</th>
                                         <th>Description</th>
                                         <th>Date</th>
                                         <th>Amount</th>
+                                        <th>Balance after Transaction</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(transaction, index) in accountInfo.transactions"
                                         v-bind:class="[ transaction.type == 'CREDIT' ? 'credit-transaction' : 'debit-transaction' ]">
-                                        <td>{{ index+1 }}</td>
+                                        <td>{{ index }}</td>
                                         <td>{{ transaction.description }}</td>
                                         <td>{{ formatDate(transaction.date) }}</td>
                                         <td>{{ transaction.amount }}</td>
+                                        <td>{{ transaction.balance }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filterModalLabel">Select dates to filter transactions</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="startDate">Fecha de inicio:</label>
+                            <input type="date" id="startDate" v-model="startDate">
+                        </div>
+                        <div>
+                            <label for="endDate">Fecha de fin:</label>
+                            <input type="date" id="endDate" v-model="endDate">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" v-on:click="filteredTransactions" class="btn btn-sm btn-success">Search transactions</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal 2 -->
+        <div class="modal fade" id="filteredModal" tabindex="-1" aria-labelledby="filteredModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filteredModalLabel">Resultado de transacciones</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <h1 class="display-3">Account N°{{ accountInfo.number }} details</h1>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <h2>Transactions</h2>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Nº</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Balance after Transaction</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(transaction, index) in transactionFiltered"
+                                            v-bind:class="[ transaction.type == 'CREDIT' ? 'credit-transaction' : 'debit-transaction' ]">
+                                            <td>{{ index }}</td>
+                                            <td>{{ transaction.description }}</td>
+                                            <td>{{ formatDate(transaction.date) }}</td>
+                                            <td>{{ transaction.amount }}</td>
+                                            <td>{{ transaction.balance }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" v-on:click="finish" class="btn btn-sm btn-success"
+                                data-bs-dismiss="modal">Ok</button>
                     </div>
                 </div>
             </div>

@@ -23,9 +23,12 @@ public class WebAuthorization {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/web/index.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients","/api/login", "/api/logout").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/clients/current", "/web/accounts.html", "/api/accounts/**")
+                .antMatchers(HttpMethod.GET,"/api/clients/current", "/web/accounts.html", "/api/accounts/**",
+                        "/api/clients/current/accounts", "/api/loans", "/api/transactions").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST,"/api/transactions","/api/loans","/api/clients/current",
+                        "/api/clients/current/**")
                 .hasAnyAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST,"/api/clients/current").hasAnyAuthority("CLIENT")
+                .antMatchers(HttpMethod.PATCH, "/api/clients/current/**").hasAnyAuthority("CLIENT")
                 .antMatchers("/api/**", "/manager.html", "/rest/**").hasAnyAuthority("ADMIN");
 
 

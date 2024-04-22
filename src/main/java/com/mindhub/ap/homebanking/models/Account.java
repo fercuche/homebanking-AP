@@ -16,6 +16,7 @@ public class Account {
     private Long id;
 
     private String number;
+    private AccountType accountType;
     private LocalDate creationDate;
     private Double balance;
 
@@ -29,8 +30,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationDate, Double balance, Client client) {
+    public Account(String number, AccountType accountType, LocalDate creationDate, Double balance, Client client) {
         this.number = number;
+        this.accountType = accountType;
         this.creationDate = creationDate;
         this.balance = balance;
         this.client = client;
@@ -38,6 +40,10 @@ public class Account {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
     public void setCreationDate(LocalDate creationDate) {
@@ -52,12 +58,20 @@ public class Account {
         this.client = client;
     }
 
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
     public Long getId() {
         return id;
     }
 
     public String getNumber() {
         return number;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
     }
 
     public LocalDate getCreationDate() {
@@ -76,9 +90,7 @@ public class Account {
         return transactions;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+
 
     public void addTransaction(Transaction transaction){
         transaction.setAccount(this);

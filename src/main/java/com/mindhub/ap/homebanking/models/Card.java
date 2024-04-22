@@ -25,10 +25,13 @@ public class Card {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    private boolean deleted = Boolean.FALSE;
+
     public Card() {
     }
 
-    public Card(String number, Integer cvv, CardType type, CardColor color, LocalDate fromDate, LocalDate thruDate, Client client) {
+    public Card(String number, Integer cvv, CardType type, CardColor color, LocalDate fromDate, LocalDate thruDate, Client client,
+            boolean deleted) {
         this.number = number;
         this.cvv = cvv;
         this.type = type;
@@ -37,6 +40,7 @@ public class Card {
         this.thruDate = thruDate;
         this.client = client;
         this.cardHolder = client.getFirstName() + " " + client.getLastName();
+        this.deleted = deleted;
     }
 
     public String getCardHolder() {
@@ -79,6 +83,10 @@ public class Card {
         return client;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public void setNumber(String number) {
         this.number = number;
     }
@@ -105,5 +113,9 @@ public class Card {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

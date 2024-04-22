@@ -16,6 +16,7 @@ public class CardDTO {
     private Integer cvv;
     private LocalDate fromDate;
     private LocalDate thruDate;
+    private boolean deleted;
 
     public CardDTO(Card card){
         this.id = card.getId();
@@ -26,6 +27,7 @@ public class CardDTO {
         this.color = card.getColor();
         this.fromDate = card.getFromDate();
         this.thruDate = card.getThruDate();
+        this.deleted = card.isDeleted();
     }
 
     public Long getId() {
@@ -58,5 +60,9 @@ public class CardDTO {
 
     public LocalDate getThruDate() {
         return thruDate;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 }
